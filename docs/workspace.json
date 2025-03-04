@@ -1,0 +1,409 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2025-01-28T10:00:26Z",
+  "model" : {
+    "people" : [ {
+      "description" : "User of the HelloPlanet application",
+      "id" : "1",
+      "location" : "Unspecified",
+      "name" : "User",
+      "properties" : {
+        "structurizr.dsl.identifier" : "user"
+      },
+      "relationships" : [ {
+        "description" : "Interacts with",
+        "destinationId" : "3",
+        "id" : "13",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Interacts with",
+        "destinationId" : "2",
+        "id" : "14",
+        "linkedRelationshipId" : "13",
+        "sourceId" : "1"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "description" : "Angular",
+        "documentation" : { },
+        "id" : "3",
+        "name" : "Web Application",
+        "properties" : {
+          "structurizr.dsl.identifier" : "webapp"
+        },
+        "relationships" : [ {
+          "description" : "Fetches supported languages",
+          "destinationId" : "4",
+          "id" : "15",
+          "sourceId" : "3",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetches a random planet",
+          "destinationId" : "7",
+          "id" : "16",
+          "sourceId" : "3",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetches a random greeting",
+          "destinationId" : "10",
+          "id" : "17",
+          "sourceId" : "3",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Displays the generated greeting to the user."
+      }, {
+        "components" : [ {
+          "description" : "Handles API requests for languages.",
+          "documentation" : { },
+          "id" : "5",
+          "name" : "Language Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "languagecontroller"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "6",
+            "id" : "18",
+            "sourceId" : "5",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "An in-memory database that contains the languages supported by the system.",
+          "documentation" : { },
+          "id" : "6",
+          "name" : "Language Repository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "languagerepository"
+          },
+          "tags" : "Element,Component"
+        } ],
+        "description" : "ASP.NET Core Web API",
+        "documentation" : { },
+        "id" : "4",
+        "name" : "Language Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "languageservice"
+        },
+        "tags" : "Element,Container",
+        "technology" : "Provides a list of supported languages."
+      }, {
+        "components" : [ {
+          "description" : "Handles API requests for planets.",
+          "documentation" : { },
+          "id" : "8",
+          "name" : "Planet Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "planetcontroller"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "9",
+            "id" : "19",
+            "sourceId" : "8",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "An in-memory database that contains different planets in different languages.",
+          "documentation" : { },
+          "id" : "9",
+          "name" : "Planet Repository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "planetrepository"
+          },
+          "tags" : "Element,Component"
+        } ],
+        "description" : "ASP.NET Core Web API",
+        "documentation" : { },
+        "id" : "7",
+        "name" : "Planet Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "planetservice"
+        },
+        "tags" : "Element,Container",
+        "technology" : "Provides a random planet name based on a given language."
+      }, {
+        "components" : [ {
+          "description" : "Handles API requests for greetings.",
+          "documentation" : { },
+          "id" : "11",
+          "name" : "Greeting Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "greetingcontroller"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "12",
+            "id" : "20",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "An in-memory database that contains different greetings like 'Hi', 'Hello', 'Good day' in different languages.",
+          "documentation" : { },
+          "id" : "12",
+          "name" : "Greeting Repository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "greetingrepository"
+          },
+          "tags" : "Element,Component"
+        } ],
+        "description" : "ASP.NET Core Web API",
+        "documentation" : { },
+        "id" : "10",
+        "name" : "Greeting Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "greetingservice"
+        },
+        "tags" : "Element,Container",
+        "technology" : "Provides a random greeting based on the language."
+      } ],
+      "description" : "A web application that generates greetings in different languages for random planets.",
+      "documentation" : { },
+      "id" : "2",
+      "location" : "Unspecified",
+      "name" : "HelloPlanet System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "helloplanetsystem"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKICAgIG1vZGVsIHsKICAgICAgICBVc2VyID0gcGVyc29uICJVc2VyIiAiVXNlciBvZiB0aGUgSGVsbG9QbGFuZXQgYXBwbGljYXRpb24iCiAgICAgICAgCiAgICAgICAgSGVsbG9QbGFuZXRTeXN0ZW0gPSBzb2Z0d2FyZVN5c3RlbSAiSGVsbG9QbGFuZXQgU3lzdGVtIiAiQSB3ZWIgYXBwbGljYXRpb24gdGhhdCBnZW5lcmF0ZXMgZ3JlZXRpbmdzIGluIGRpZmZlcmVudCBsYW5ndWFnZXMgZm9yIHJhbmRvbSBwbGFuZXRzLiIgewogICAgICAgICAgICBXZWJBcHAgPSBjb250YWluZXIgIldlYiBBcHBsaWNhdGlvbiIgIkFuZ3VsYXIiICJEaXNwbGF5cyB0aGUgZ2VuZXJhdGVkIGdyZWV0aW5nIHRvIHRoZSB1c2VyLiIKICAgICAgICAgICAgCiAgICAgICAgICAgIExhbmd1YWdlU2VydmljZSA9IGNvbnRhaW5lciAiTGFuZ3VhZ2UgU2VydmljZSIgIkFTUC5ORVQgQ29yZSBXZWIgQVBJIiAiUHJvdmlkZXMgYSBsaXN0IG9mIHN1cHBvcnRlZCBsYW5ndWFnZXMuIiB7CiAgICAgICAgICAgICAgICBMYW5ndWFnZUNvbnRyb2xsZXIgPSBjb21wb25lbnQgICJMYW5ndWFnZSBDb250cm9sbGVyIiAiSGFuZGxlcyBBUEkgcmVxdWVzdHMgZm9yIGxhbmd1YWdlcy4iCiAgICAgICAgICAgICAgICBMYW5ndWFnZVJlcG9zaXRvcnkgPSBjb21wb25lbnQgIkxhbmd1YWdlIFJlcG9zaXRvcnkiICJBbiBpbi1tZW1vcnkgZGF0YWJhc2UgdGhhdCBjb250YWlucyB0aGUgbGFuZ3VhZ2VzIHN1cHBvcnRlZCBieSB0aGUgc3lzdGVtLiIKICAgICAgICAgICAgfQogICAgICAgICAgICAKICAgICAgICAgICAgUGxhbmV0U2VydmljZSA9IGNvbnRhaW5lciAiUGxhbmV0IFNlcnZpY2UiICJBU1AuTkVUIENvcmUgV2ViIEFQSSIgIlByb3ZpZGVzIGEgcmFuZG9tIHBsYW5ldCBuYW1lIGJhc2VkIG9uIGEgZ2l2ZW4gbGFuZ3VhZ2UuIiB7CiAgICAgICAgICAgICAgICBQbGFuZXRDb250cm9sbGVyID0gY29tcG9uZW50ICJQbGFuZXQgQ29udHJvbGxlciIgIkhhbmRsZXMgQVBJIHJlcXVlc3RzIGZvciBwbGFuZXRzLiIKICAgICAgICAgICAgICAgIFBsYW5ldFJlcG9zaXRvcnkgPSBjb21wb25lbnQgIlBsYW5ldCBSZXBvc2l0b3J5IiAiQW4gaW4tbWVtb3J5IGRhdGFiYXNlIHRoYXQgY29udGFpbnMgZGlmZmVyZW50IHBsYW5ldHMgaW4gZGlmZmVyZW50IGxhbmd1YWdlcy4iCiAgICAgICAgICAgIH0KICAgICAgICAgICAgCiAgICAgICAgICAgIEdyZWV0aW5nU2VydmljZSA9IGNvbnRhaW5lciAiR3JlZXRpbmcgU2VydmljZSIgIkFTUC5ORVQgQ29yZSBXZWIgQVBJIiAiUHJvdmlkZXMgYSByYW5kb20gZ3JlZXRpbmcgYmFzZWQgb24gdGhlIGxhbmd1YWdlLiIgewogICAgICAgICAgICAgICAgR3JlZXRpbmdDb250cm9sbGVyID0gY29tcG9uZW50ICJHcmVldGluZyBDb250cm9sbGVyIiAiSGFuZGxlcyBBUEkgcmVxdWVzdHMgZm9yIGdyZWV0aW5ncy4iCiAgICAgICAgICAgICAgICBHcmVldGluZ1JlcG9zaXRvcnkgPSBjb21wb25lbnQgIkdyZWV0aW5nIFJlcG9zaXRvcnkiICJBbiBpbi1tZW1vcnkgZGF0YWJhc2UgdGhhdCBjb250YWlucyBkaWZmZXJlbnQgZ3JlZXRpbmdzIGxpa2UgJ0hpJywgJ0hlbGxvJywgJ0dvb2QgZGF5JyBpbiBkaWZmZXJlbnQgbGFuZ3VhZ2VzLiIKICAgICAgICAgICAgfQogICAgICAgIH0KICAgICAgICAKICAgICAgICAvLyBSZWxhdGlvbnNoaXBzCiAgICAgICAgVXNlciAtPiBXZWJBcHAgIkludGVyYWN0cyB3aXRoIgogICAgICAgIFdlYkFwcCAtPiBMYW5ndWFnZVNlcnZpY2UgIkZldGNoZXMgc3VwcG9ydGVkIGxhbmd1YWdlcyIKICAgICAgICBXZWJBcHAgLT4gUGxhbmV0U2VydmljZSAiRmV0Y2hlcyBhIHJhbmRvbSBwbGFuZXQiCiAgICAgICAgV2ViQXBwIC0+IEdyZWV0aW5nU2VydmljZSAiRmV0Y2hlcyBhIHJhbmRvbSBncmVldGluZyIKICAgICAgICAKICAgICAgICBMYW5ndWFnZUNvbnRyb2xsZXIgLT4gTGFuZ3VhZ2VSZXBvc2l0b3J5ICJVc2VzIgogICAgICAgIFBsYW5ldENvbnRyb2xsZXIgLT4gUGxhbmV0UmVwb3NpdG9yeSAiVXNlcyIKICAgICAgICBHcmVldGluZ0NvbnRyb2xsZXIgLT4gR3JlZXRpbmdSZXBvc2l0b3J5ICJVc2VzIgogICAgfQoKICAgIHZpZXdzIHsKICAgICAgICBzdHlsZXMgewogICAgICAgICAgICBlbGVtZW50ICJFbGVtZW50IiB7CiAgICAgICAgICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiUGVyc29uIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICM5YjE5MWYKICAgICAgICAgICAgICAgIHNoYXBlIHBlcnNvbgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIlNvZnR3YXJlIFN5c3RlbSIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjYmExZTI1CiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiQXBwIiB7CiAgICAgICAgICAgICAgICBzaGFwZSAiTW9iaWxlRGV2aWNlTGFuZHNjYXBlIgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkRhdGFiYXNlIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBjeWxpbmRlcgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkNvbnRhaW5lciIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjZDkyMzJiCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiQ29tcG9uZW50IiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICNFNjZDNUEKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJXZWJCcm93c2VyIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBXZWJCcm93c2VyCiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICB9Cn0="
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "10",
+      "elements" : [ {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-001",
+      "order" : 4,
+      "relationships" : [ {
+        "id" : "20"
+      } ]
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "4",
+      "elements" : [ {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-002",
+      "order" : 5,
+      "relationships" : [ {
+        "id" : "18"
+      } ]
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "7",
+      "elements" : [ {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Component-003",
+      "order" : 6,
+      "relationships" : [ {
+        "id" : "19"
+      } ]
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "SystemLandscape-001",
+      "metadataSymbols" : "SquareBrackets",
+      "styles" : {
+        "elements" : [ {
+          "color" : "#ffffff",
+          "tag" : "Element"
+        }, {
+          "background" : "#9b191f",
+          "shape" : "Person",
+          "tag" : "Person"
+        }, {
+          "background" : "#ba1e25",
+          "tag" : "Software System"
+        }, {
+          "shape" : "MobileDeviceLandscape",
+          "tag" : "App"
+        }, {
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        }, {
+          "background" : "#d9232b",
+          "tag" : "Container"
+        }, {
+          "background" : "#e66c5a",
+          "tag" : "Component"
+        }, {
+          "shape" : "WebBrowser",
+          "tag" : "WebBrowser"
+        } ]
+      },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Container-001",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "13"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "17"
+      } ],
+      "softwareSystemId" : "2"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-001",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "14"
+      } ],
+      "softwareSystemId" : "2"
+    } ],
+    "systemLandscapeViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "dimensions" : {
+        "height" : 1400,
+        "width" : 850
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 225,
+        "y" : 165
+      }, {
+        "id" : "2",
+        "x" : 200,
+        "y" : 865
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemLandscape-001",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "14"
+      } ]
+    } ]
+  }
+}
