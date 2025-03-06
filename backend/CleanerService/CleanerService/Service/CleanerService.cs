@@ -40,7 +40,7 @@ public class CleanerService : ICleanerService
 
         foreach (var c in Path.GetInvalidFileNameChars())
         {
-            filename = filename.Replace(c, '_');
+            filename = filename.Replace(c.ToString(), "");
         }
         
         return filename;
