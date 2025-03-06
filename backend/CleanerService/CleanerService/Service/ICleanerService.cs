@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CleanerService.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CleanerService.Service;
 
 public interface ICleanerService
 {
-    Task<ActionResult> CleanFiles(IFormFile[] files);
+    Task<List<CleanedFile>> CleanFiles(IFormFile[] files);
 }

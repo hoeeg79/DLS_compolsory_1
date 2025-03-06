@@ -1,51 +1,48 @@
-﻿using System.Text.RegularExpressions;
-using CleanerService.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using CleanerService.Models;
+using MimeKit;
 
 namespace CleanerService.Service;
 
 public class CleanerService : ICleanerService
 {
-    public async Task<ActionResult> CleanFiles(IFormFile[] files)
+    public async Task<List<CleanedFile>> CleanFiles(IFormFile[] files)
     {
         var cleanedFiles = new List<CleanedFile>();
         
         foreach (var file in files)
         {
-            try
-            {
-                using var stream = new MemoryStream();
-                await file.CopyToAsync(stream);
-                var fileContent = System.Text.Encoding.UTF8.GetString(stream.ToArray());
-
-                var cleanedFile = CleanFileContent(fileContent);
-                var fileName = file.Name;
-                    
-                cleanedFiles.Add(new CleanedFile
-                {
-                    FileName = fileName,
-                    Body = cleanedFile
-                });
-            }
-            catch (Exception e)
-            {
-                cleanedFiles.Add(new CleanedFile
-                {
-                    FileName = file.FileName,
-                    Body = $@"Error processing file: {e.Message}"
-                });
-            }
-            Console.WriteLine("Files cleaned: " + cleanedFiles.Count);
+            await using var stream = file.OpenReadStream();
+            var cleanedFile = await CleanFile(stream);
+            
+            cleanedFiles.Add(cleanedFile);
         }
 
-        return new OkObjectResult(cleanedFiles);
+        return cleanedFiles;
     }
 
-    private string CleanFileContent(string content)
+    private async Task<CleanedFile> CleanFile(Stream stream)
     {
-        var pattern = @"(?<=\n)[^@]*\n.*?\n--\n";
-        var body = Regex.Replace(content, pattern, "", RegexOptions.Singleline);
+        var email = await MimeMessage.LoadAsync(stream);
 
-        return body.Trim();
+        return new CleanedFile
+        {
+            FileName = SanitizeFilename(email.Subject),
+            Body = email.TextBody ?? email.HtmlBody ?? "No content available."
+        };
+    }
+
+    private static string SanitizeFilename(string filename)
+    {
+        if (string.IsNullOrWhiteSpace(filename))
+        {
+            return "Untitled_Email";
+        }
+
+        foreach (var c in Path.GetInvalidFileNameChars())
+        {
+            filename = filename.Replace(c, '_');
+        }
+        
+        return filename;
     }
 }
