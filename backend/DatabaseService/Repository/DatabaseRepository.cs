@@ -1,3 +1,4 @@
+using DatabaseService.DTO;
 using DatabaseService.Entities;
 
 namespace DatabaseService.Repository;
@@ -27,6 +28,11 @@ public class DatabaseRepository : IDatabaseRepository
     }
 
     public Occurrences GetOccurrence(Words word)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<SearchResultDto?> GetSearch(string query)
     {
         throw new NotImplementedException();
     }

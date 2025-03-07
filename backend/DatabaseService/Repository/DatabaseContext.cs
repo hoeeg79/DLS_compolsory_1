@@ -5,8 +5,10 @@ namespace DatabaseService.Repository;
 
 public class DatabaseContext : DbContext
 {
+    private const string Username = "postgres";
+    private const string Password = "postgres";
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
-        =>optionsBuilder.UseNpgsql("Host=localhost;Database=DSL_Compulsory_1;Username=postgres;Password=postgres");
+        =>optionsBuilder.UseNpgsql($"Host=db-postgres;Port=5432;Database=dls;Username={Username};Password={Password};Trust Server Certificate=true;");
 
     public DbSet<Words> Words { get; set; }
     public DbSet<Files> Files { get; set; }

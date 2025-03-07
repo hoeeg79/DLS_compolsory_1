@@ -1,3 +1,4 @@
+using DatabaseService.DTO;
 using DatabaseService.Entities;
 
 namespace DatabaseService.Repository;
@@ -11,4 +12,6 @@ public interface IDatabaseRepository
     Words GetWord(int wordId);
     
     Occurrences GetOccurrence(Words word);
+
+    Task<SearchResultDto?> GetSearch(string query);
 }
