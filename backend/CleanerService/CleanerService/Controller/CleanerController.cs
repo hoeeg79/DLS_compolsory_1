@@ -17,6 +17,8 @@ public class CleanerController : ControllerBase
     }
 
     [HttpPost("clean")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ActionResult CleanFiles([FromForm] IFormFile[]? files)
     {
         if (files == null || files.Length == 0)
