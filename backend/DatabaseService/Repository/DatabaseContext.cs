@@ -3,15 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseService.Repository;
 
-public class DatabaseContext : DbContext
+public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
 {
-    private const string Username = "postgres";
-    private const string Password = "postgres";
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
-        =>optionsBuilder.UseNpgsql($"Host=db-postgres;Port=5432;Database=dls;Username={Username};Password={Password};Trust Server Certificate=true;");
-
     public DbSet<Words> Words { get; set; }
-    public DbSet<Files> Files { get; set; }
+    public DbSet<Emails> Emails { get; set; }
     public DbSet<Occurrences> Occurrences { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,9 +17,14 @@ public class DatabaseContext : DbContext
             .HasForeignKey(occurrences => occurrences.WordId);
         
         modelBuilder.Entity<Occurrences>()
-            .HasOne(occurrences => occurrences.File)
+            .HasOne(occurrences => occurrences.Email)
             .WithMany()
             .HasForeignKey(occurrences => occurrences.FileId);
+        
+        modelBuilder.Entity<Occurrences>()
+            .Property(o => o.Count)
+            .HasDefaultValue(1) // Ensure Count is correctly handled
+            .IsRequired();
         
         base.OnModelCreating(modelBuilder);
     }

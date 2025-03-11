@@ -1,33 +1,44 @@
 using DatabaseService.DTO;
 using DatabaseService.Repository;
+using DatabaseService.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatabaseService.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DatabaseController : ControllerBase
+public class DatabaseController(IDatabaseService service) : ControllerBase
 {
-    private readonly DatabaseRepository _repository;
-    
-    public DatabaseController(DatabaseRepository repository)
-    {
-        _repository = repository;
-    }
-    
-    [HttpGet("{query}")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResultDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Get([FromQuery] string query)
+    public async Task<ActionResult<SearchResultDto>> Get([FromQuery] string query)
     {
         try
         {
-            return Ok( await _repository.GetSearch(query));
+            return Ok(await service.GetSearch(query));
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             return NotFound(e.Message);
+        }
+    }
+    
+    [HttpPost("insert")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> InsertFiles([FromBody] ListScrubbedFilesDto files)
+    {
+        try
+        {
+            await service.InsertFiles(files);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
         }
     }
 }

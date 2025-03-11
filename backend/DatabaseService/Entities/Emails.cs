@@ -1,13 +1,16 @@
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DatabaseService.Entities;
 
-public class Words
+public class Emails
 {
     [Key] // Explicitly mark it as the primary key
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
-    public int WordId { get; set; }
+    public int FileId { get; set; }
     
-    public required string Word { get; set; }
+    public required string FileName { get; set; }
+    
+    public required byte[] FileContent { get; set; }
 }
