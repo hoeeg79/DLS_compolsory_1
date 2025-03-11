@@ -19,7 +19,7 @@ public class SearchController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResultDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<SearchResultDto>> GetSearch(SearchDto searchQuery)
+    public async Task<ActionResult<SearchResultDto>> GetSearch([FromQuery] string searchQuery)
     {
         try
         {

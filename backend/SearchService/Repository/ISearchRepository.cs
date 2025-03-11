@@ -8,5 +8,5 @@ public interface ISearchRepository
     /**
      * Method to call the DB API and get the search results
      */
-    Task<SearchResultDto?> GetSearch(SearchDto searchQuery);
+    Task<SearchResultDto?> GetSearch(string searchQuery);
 }

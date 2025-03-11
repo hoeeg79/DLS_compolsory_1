@@ -8,7 +8,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<ISearchRepository, SearchRepository>();
+builder.Services.AddHttpClient<ISearchRepository, SearchRepository>();
+
 
 var app = builder.Build();
 
