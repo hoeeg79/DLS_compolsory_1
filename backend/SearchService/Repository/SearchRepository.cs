@@ -12,11 +12,11 @@ public class SearchRepository : ISearchRepository
         _httpClient = httpClient;
     }
 
-    public async Task<SearchResultDto?> GetSearch(SearchDto searchQuery)
+    public async Task<SearchResultDto?> GetSearch(string searchQuery)
     {
         try
         {
-            var response = await _httpClient.GetAsync($"http://localhost:5000/api/db?query={searchQuery.Query}");
+            var response = await _httpClient.GetAsync($"http://localhost:5108/api/Database?query={searchQuery}");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("Der var fisk i min kaffe");

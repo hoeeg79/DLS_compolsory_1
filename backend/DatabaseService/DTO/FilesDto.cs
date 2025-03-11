@@ -11,5 +11,5 @@ public class FilesDto
     
     public int CountOfOccurrences { get; set; }
     
-    public string FileContentBase64 => Convert.ToBase64String(FileContentBytes);
+    public string FileContent => Convert.ToBase64String(FileContentBytes);
 }
