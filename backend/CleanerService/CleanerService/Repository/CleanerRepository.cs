@@ -26,7 +26,7 @@ public class CleanerRepository : ICleanerRepository
             "application/json"
         );
 
-        _httpClient.BaseAddress = new Uri("http://localhost:5108");
+        _httpClient.BaseAddress = new Uri("http://db-api:8080");
         await _httpClient.PostAsync("/api/database/insert", jsonContent);
     }
 }

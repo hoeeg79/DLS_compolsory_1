@@ -1,4 +1,35 @@
 services:
+  db-api:
+    build:
+      context: ./backend/DatabaseService
+      dockerfile: Dockerfile
+    ports:
+      - 5108:8080
+    depends_on:
+      - db-postgres
+    environment:
+      - POSTGRES_HOST=db-postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  
+  search-api:  
+    build:
+      context: ./backend/SearchService
+      dockerfile: Dockerfile
+    ports:
+      - 5109:8080
+    depends_on:
+      - db-api
+  
+  cleaner-api:
+    build:
+      context: ./backend/CleanerService
+      dockerfile: CleanerService/Dockerfile
+    ports:
+      - 5110:8080
+    depends_on:
+      - db-api
+    
   db-postgres:
     image: postgres
     ports:
@@ -6,6 +37,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      
   structurizr:
     image: structurizr/lite
     ports:
