@@ -1,12 +1,20 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 using CleanerService.Models;
+using CleanerService.Repository;
 using MimeKit;
 
 namespace CleanerService.Service;
 
 public partial class CleanerService : ICleanerService
 {
+    private readonly ICleanerRepository _cleanerRepository;
+
+    public CleanerService(ICleanerRepository cleanerRepository)
+    {
+        _cleanerRepository = cleanerRepository;
+    }
+
     public async Task<List<CleanedFileDto>> CleanFiles(IFormFile[] files)
     {
         var cleanedFiles = new List<CleanedFileDto>();
@@ -18,6 +26,8 @@ public partial class CleanerService : ICleanerService
             
             cleanedFiles.Add(cleanedFile);
         }
+        
+        await _cleanerRepository.SendCleanFiles(cleanedFiles);
 
         return cleanedFiles;
     }

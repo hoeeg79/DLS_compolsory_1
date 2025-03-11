@@ -1,9 +1,11 @@
+using CleanerService.Repository;
 using CleanerService.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient<ICleanerRepository, CleanerRepository>();
 builder.Services.AddScoped<ICleanerService, CleanerService.Service.CleanerService>();
 
 builder.Services.AddEndpointsApiExplorer();

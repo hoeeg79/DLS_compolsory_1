@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using CleanerService.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ public class CleanerController : ControllerBase
         _cleanerService = cleanerService;
     }
 
-    [HttpPost("/clean")]
+    [HttpPost("clean")]
     public ActionResult CleanFiles([FromForm] IFormFile[]? files)
     {
         if (files == null || files.Length == 0)
@@ -26,22 +27,6 @@ public class CleanerController : ControllerBase
         try
         {
             var result = _cleanerService.CleanFiles(files);
-
-            using StringContent jsonContent = new(
-                JsonSerializer.Serialize(new
-                    {
-                        Files = result.Result
-                    }
-                )
-            );
-
-            var httpClient = new HttpClient();
-            var response = httpClient.PostAsync("/api/database/insert", jsonContent);
-
-            if (!response.Result.IsSuccessStatusCode)
-            {
-                return StatusCode(500, response.Result.StatusCode);
-            }
 
             return Ok(result);
         }
