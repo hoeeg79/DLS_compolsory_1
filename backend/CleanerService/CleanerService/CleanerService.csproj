@@ -4,10 +4,12 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>CleanerService</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2"/>
+      <PackageReference Include="MimeKitLite" Version="4.10.0" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
     </ItemGroup>
 
 </Project>
