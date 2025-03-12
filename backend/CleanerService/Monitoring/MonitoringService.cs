@@ -9,7 +9,7 @@ namespace Monitoring;
 
 public static class MonitoringService
 {
-    public static readonly string ServiceName = Assembly.GetCallingAssembly().GetName().Name;
+    public static readonly string ServiceName = Assembly.GetCallingAssembly().GetName().Name ?? "Unknown";
     public static TracerProvider TracerProvider;
     public static ActivitySource ActivitySource = new ActivitySource(ServiceName);
     public static ILogger Log => Serilog.Log.Logger;
@@ -17,12 +17,13 @@ public static class MonitoringService
     static MonitoringService()
     {
         TracerProvider = Sdk.CreateTracerProviderBuilder()
-            .AddConsoleExporter()
-            .AddZipkinExporter()
             .AddSource(ActivitySource.Name)
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(ServiceName))
+            .AddAspNetCoreInstrumentation()
+            .AddConsoleExporter()
+            .AddZipkinExporter()
             .Build();
-        
+
         Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
             .WriteTo.Console()

@@ -1,7 +1,8 @@
-﻿using CleanerService.Service;
+﻿using System.Diagnostics;
+using CleanerService.Service;
 using Microsoft.AspNetCore.Mvc;
 using Monitoring;
-using OpenTelemetry;
+using OpenTelemetry.Trace;
 
 namespace CleanerService.Controller;
 
@@ -21,23 +22,25 @@ public class CleanerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> CleanFiles([FromForm] IFormFile[]? files)
     {
-        using var activity = MonitoringService.ActivitySource.StartActivity();
-        
-        if (files == null || files.Length == 0)
+        using (var activity = MonitoringService.ActivitySource.StartActivity("CleanFiles"))
         {
-            return BadRequest("No files uploaded.");
-        }
 
-        try
-        {
-            MonitoringService.Log.Information("Starting CleanerService with {files} files uploaded.", files.Length);
-            await _cleanerService.CleanFiles(files);
+            if (files == null || files.Length == 0)
+            {
+                return BadRequest("No files uploaded.");
+            }
 
-            return Ok();
-        }
-        catch (Exception e)
-        {
-            return StatusCode(500, $"Internal Server Error: {e.Message}");
+            try
+            {
+                MonitoringService.Log.Information("Starting CleanerService with {files} files uploaded.", files.Length);
+                await _cleanerService.CleanFiles(files);
+                MonitoringService.TracerProvider.ForceFlush();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internal Server Error: {e.Message}");
+            }
         }
     }
 }
