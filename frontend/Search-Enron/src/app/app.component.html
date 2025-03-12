@@ -1,6 +1,6 @@
 <div class="top">
   <h1>Search Enron Mails</h1>
-  <input type="text" [(ngModel)]="searchTerm" (keyup)="search()" placeholder="Search for a term"/>
+  <input type="text" (keyup)="search(getValue($event))" placeholder="Search for a term"/>
   <br>
   <input type="file" class="file-input" multiple (change)="onChange($event)"/>
 

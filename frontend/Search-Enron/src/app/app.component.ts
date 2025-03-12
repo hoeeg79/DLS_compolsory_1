@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {throwError} from "rxjs";
+import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, throwError} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,9 @@ import {throwError} from "rxjs";
 })
 export class AppComponent {
   title = 'Search-Enron';
-  searchTerm: string = '';
+  packages$!: Observable<any>;
+  private searchTerm$ = new Subject<string>();
+  searchResult: any;
   status: "initial" | "uploading" | "success" | "fail" = "initial";
   files: File[] = [];
 
@@ -17,10 +19,23 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.packages$ = this.searchTerm$.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      switchMap(packageName => this.search(packageName))
+    )
   }
 
-  search() {
+  search(packageName: string) {
+    var result = this.http.get("http://localhost:5109/api/search?searchQuery=" + packageName);
 
+    result.subscribe({
+      next: result => {
+        console.log(result);
+        this.searchResult = result;
+      }
+    })
+    return result;
   }
 
   onChange(event: any) {
@@ -60,5 +75,9 @@ export class AppComponent {
   onClear() {
     this.status = "initial";
     this.files = [];
+  }
+
+  getValue(event: Event) {
+    return (event.target as HTMLInputElement).value;
   }
 }

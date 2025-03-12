@@ -43,6 +43,16 @@ builder.Services.AddHttpClient<ISearchRepository, SearchRepository>(client =>
     client.BaseAddress = new Uri($"http://{hostname}");
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowAllOrigins",
+        configurePolicy: policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
 
@@ -52,6 +62,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(policyName: "AllowAllOrigins");
 
 app.UseHttpsRedirection();
 app.MapControllers();
