@@ -9,7 +9,7 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
     public async Task<SearchResultDto?> GetSearch(string query)
     {
         // Find word
-        Words? word = await context.Words.Where(word => word.Word.Contains(query)).FirstOrDefaultAsync();
+        Words? word = await context.Words.Where(word => word.Word.Contains(query.ToLower())).FirstOrDefaultAsync();
         if (word == null)
         {
             return null;

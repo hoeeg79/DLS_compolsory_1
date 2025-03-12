@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using CleanerService.Models;
 
 namespace CleanerService.Repository;
@@ -15,18 +16,16 @@ public class CleanerRepository : ICleanerRepository
 
     public async Task SendCleanFiles(List<CleanedFileDto> files)
     {
-        
-        using StringContent jsonContent = new(
-            JsonSerializer.Serialize(new
-                {
-                    Files = files
-                }
-            ),
-            Encoding.UTF8,
-            "application/json"
-        );
+        JsonSerializerOptions options = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        };
 
-        _httpClient.BaseAddress = new Uri("http://db-api:8080");
+        var json = JsonSerializer.Serialize(new { Files = files }, options);
+
+        using StringContent jsonContent = new(json, Encoding.UTF8, "application/json");
+
         await _httpClient.PostAsync("/api/database/insert", jsonContent);
     }
 }

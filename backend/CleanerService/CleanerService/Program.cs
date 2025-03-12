@@ -3,9 +3,17 @@ using CleanerService.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string hostname = "localhost:5108";
+if (!builder.Environment.IsDevelopment())
+{
+    hostname = "db-api:8080";
+}
 
 builder.Services.AddControllers();
-builder.Services.AddHttpClient<ICleanerRepository, CleanerRepository>();
+builder.Services.AddHttpClient<ICleanerRepository, CleanerRepository>(client =>
+{
+    client.BaseAddress = new Uri($"http://{hostname}");
+});
 builder.Services.AddScoped<ICleanerService, CleanerService.Service.CleanerService>();
 
 builder.Services.AddEndpointsApiExplorer();

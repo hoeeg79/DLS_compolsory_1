@@ -5,5 +5,5 @@ namespace CleanerService.Service;
 
 public interface ICleanerService
 {
-    Task<List<CleanedFileDto>> CleanFiles(IFormFile[] files);
+    Task CleanFiles(IFormFile[] files);
 }
