@@ -1,9 +1,12 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 using CleanerService.Models;
 using CleanerService.Repository;
 using MimeKit;
 using Monitoring;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 
 namespace CleanerService.Service;
 
@@ -21,7 +24,7 @@ public partial class CleanerService : ICleanerService
         var cleanedFiles = new List<CleanedFileDto>();
 
         using var activity = MonitoringService.ActivitySource.StartActivity();
-
+        
         MonitoringService.Log.Information("Cleaning files...");
 
         foreach (var file in files)

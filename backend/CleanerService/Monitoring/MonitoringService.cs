@@ -26,7 +26,7 @@ public static class MonitoringService
         Serilog.Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
             .WriteTo.Console()
-            .WriteTo.Seq("http://localhost:5341")
+            .WriteTo.Seq("http://seq:5341")
             .CreateLogger();
     }
 }

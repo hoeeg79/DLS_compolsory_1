@@ -1,8 +1,7 @@
-﻿using System.Text;
-using System.Text.Json;
-using CleanerService.Service;
+﻿using CleanerService.Service;
 using Microsoft.AspNetCore.Mvc;
 using Monitoring;
+using OpenTelemetry;
 
 namespace CleanerService.Controller;
 
@@ -23,7 +22,7 @@ public class CleanerController : ControllerBase
     public async Task<ActionResult> CleanFiles([FromForm] IFormFile[]? files)
     {
         using var activity = MonitoringService.ActivitySource.StartActivity();
-
+        
         if (files == null || files.Length == 0)
         {
             return BadRequest("No files uploaded.");
