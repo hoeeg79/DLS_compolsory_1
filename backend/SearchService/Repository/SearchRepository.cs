@@ -16,7 +16,7 @@ public class SearchRepository : ISearchRepository
     {
         try
         {
-            var response = await _httpClient.GetAsync($"http://db-api:8080/api/Database?query={searchQuery}");
+            var response = await _httpClient.GetAsync($"/api/Database?query={searchQuery}");
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception("Der var fisk i min kaffe");
