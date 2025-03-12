@@ -2,6 +2,7 @@
 using System.Text.Json;
 using CleanerService.Service;
 using Microsoft.AspNetCore.Mvc;
+using Monitoring;
 
 namespace CleanerService.Controller;
 
@@ -21,6 +22,8 @@ public class CleanerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> CleanFiles([FromForm] IFormFile[]? files)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity();
+
         if (files == null || files.Length == 0)
         {
             return BadRequest("No files uploaded.");
@@ -28,6 +31,7 @@ public class CleanerController : ControllerBase
 
         try
         {
+            MonitoringService.Log.Information("Starting CleanerService with {files} files uploaded.", files.Length);
             await _cleanerService.CleanFiles(files);
 
             return Ok();
