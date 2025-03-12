@@ -1,5 +1,6 @@
 using DatabaseService.DTO;
 using DatabaseService.Entities;
+using DefaultNamespace;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseService.Repository;
@@ -8,6 +9,7 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 {
     public async Task<SearchResultDto?> GetSearch(string query)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.GetSearch");
         // Find word
         Words? word = await context.Words.Where(word => word.Word.Contains(query.ToLower())).FirstOrDefaultAsync();
         if (word == null)
@@ -41,6 +43,7 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 
     public async Task<Emails> InsertFile(Emails email)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.InsertFile");
         context.Emails.Add(email);
         await context.SaveChangesAsync();
         return email;
@@ -48,6 +51,7 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 
     public async Task<List<Words>> InsertWords(List<Words> words)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.InsertWords");
         context.Words.AddRange(words);
         await context.SaveChangesAsync();
         return words;
@@ -55,6 +59,7 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 
     public async Task<Dictionary<string, int>> GetExistingWords(List<string> wordList)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.GetExistingWords");
         // Ensure proper query execution by checking against lowercase words
         return await context.Words
             .Where(existingWord => wordList.Contains(existingWord.Word))
@@ -63,6 +68,7 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 
     public async Task InsertOccurrences(List<Occurrences> occurrences)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.InsertOccurrences");
         context.Occurrences.AddRange(occurrences);
         await context.SaveChangesAsync();
     }

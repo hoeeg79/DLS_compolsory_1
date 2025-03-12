@@ -1,6 +1,6 @@
 using DatabaseService.DTO;
-using DatabaseService.Repository;
 using DatabaseService.Service;
+using DefaultNamespace;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatabaseService.Controllers;
@@ -14,6 +14,7 @@ public class DatabaseController(IDatabaseService service) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<SearchResultDto>> Get([FromQuery] string query)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseController.Get");
         try
         {
             return Ok(await service.GetSearch(query));

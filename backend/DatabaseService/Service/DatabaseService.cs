@@ -1,6 +1,7 @@
 using DatabaseService.DTO;
 using DatabaseService.Entities;
 using DatabaseService.Repository;
+using DefaultNamespace;
 
 namespace DatabaseService.Service;
 
@@ -13,6 +14,7 @@ public class DatabaseService(IDatabaseRepository repository) : IDatabaseService
 
     public async Task InsertFiles(ListScrubbedFilesDto fileName)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseService.InsertFiles");
         foreach (ScrubbedFilesDto scrubbedFile in fileName.Files)
         {
             // Save file
@@ -43,6 +45,7 @@ public class DatabaseService(IDatabaseRepository repository) : IDatabaseService
 
     private async Task<Dictionary<string, int>> SaveWords(List<string> words)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseService.SaveWords");
         // Normalize words and remove duplicates
         var uniqueWordsList = words
             .Select(word => word.ToLower())
@@ -73,6 +76,7 @@ public class DatabaseService(IDatabaseRepository repository) : IDatabaseService
 
     private async Task<Emails> SaveEmail(string fileName, byte[] content)
     {
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseService.SaveEmail");
         Emails email = new()
         {
             FileName = fileName,
