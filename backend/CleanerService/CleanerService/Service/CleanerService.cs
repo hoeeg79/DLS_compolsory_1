@@ -15,7 +15,7 @@ public partial class CleanerService : ICleanerService
         _cleanerRepository = cleanerRepository;
     }
 
-    public async Task<List<CleanedFileDto>> CleanFiles(IFormFile[] files)
+    public async Task CleanFiles(IFormFile[] files)
     {
         var cleanedFiles = new List<CleanedFileDto>();
         
@@ -28,8 +28,6 @@ public partial class CleanerService : ICleanerService
         }
         
         await _cleanerRepository.SendCleanFiles(cleanedFiles);
-
-        return cleanedFiles;
     }
     
     private async Task<CleanedFileDto> CleanFile(Stream stream)

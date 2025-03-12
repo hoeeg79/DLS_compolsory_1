@@ -19,7 +19,7 @@ public class CleanerController : ControllerBase
     [HttpPost("clean")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult CleanFiles([FromForm] IFormFile[]? files)
+    public async Task<ActionResult> CleanFiles([FromForm] IFormFile[]? files)
     {
         if (files == null || files.Length == 0)
         {
@@ -28,9 +28,9 @@ public class CleanerController : ControllerBase
 
         try
         {
-            var result = _cleanerService.CleanFiles(files);
+            await _cleanerService.CleanFiles(files);
 
-            return Ok(result);
+            return Ok();
         }
         catch (Exception e)
         {
