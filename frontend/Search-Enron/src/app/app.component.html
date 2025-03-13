@@ -1,6 +1,16 @@
 <div class="top">
   <h1>Search Enron Mails</h1>
   <input type="text" (keyup)="search(getValue($event))" placeholder="Search for a term"/>
+  <div *ngIf="searchResult!.searchQuery.length" class="search-section">
+    Search result:
+    <section *ngFor="let result of searchResult?.files">
+      <ul>
+        <li>Name: {{result.fileName}}</li>
+        <li>Occurrences of search: {{result.countOfOccurrences}}</li>
+        <button (click)="onDownload(result)">Download</button>
+      </ul>
+    </section>
+  </div>
   <br>
   <input type="file" class="file-input" multiple (change)="onChange($event)"/>
 

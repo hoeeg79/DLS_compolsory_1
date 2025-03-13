@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, throwError} from "rxjs";
+import {DownloadFile, SearchedFiles} from "./models/searchedFiles";
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,9 @@ import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, thro
 })
 export class AppComponent {
   title = 'Search-Enron';
-  packages$!: Observable<any>;
+  private packages$!: Observable<any>;
   private searchTerm$ = new Subject<string>();
-  searchResult: any;
+  searchResult: SearchedFiles | null = null;
   status: "initial" | "uploading" | "success" | "fail" = "initial";
   files: File[] = [];
 
@@ -20,22 +21,21 @@ export class AppComponent {
 
   ngOnInit() {
     this.packages$ = this.searchTerm$.pipe(
-      debounceTime(1000),
+      debounceTime(5000),
       distinctUntilChanged(),
-      switchMap(packageName => this.search(packageName))
+      switchMap(async (searchQuery) => this.search(searchQuery))
     )
   }
 
-  search(packageName: string) {
-    var result = this.http.get("http://localhost:5109/api/search?searchQuery=" + packageName);
+  search(searchQuery: string) {
+    var result = this.http.get<SearchedFiles>("http://localhost:5109/api/search?searchQuery=" + searchQuery);
 
     result.subscribe({
       next: result => {
-        console.log(result);
         this.searchResult = result;
       }
     })
-    return result;
+    console.log(this.searchResult);
   }
 
   onChange(event: any) {
@@ -79,5 +79,31 @@ export class AppComponent {
 
   getValue(event: Event) {
     return (event.target as HTMLInputElement).value;
+  }
+
+  onDownload(result: DownloadFile) {
+    const byteCharacters = atob(result.fileContent);
+    const byteArray = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
+      const slice = byteCharacters.slice(offset, offset + 1024);
+      const byteNumbers = new Array(slice.length);
+
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+
+      byteArray.push(new Uint8Array(byteNumbers));
+    }
+
+    const blob = new Blob(byteArray, { type: "application/octet-stream" });
+
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.download = result.fileName || "download_file";
+    link.click();
+
+    URL.revokeObjectURL(url);
   }
 }
