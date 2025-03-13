@@ -39,7 +39,7 @@ services:
     volumes:
       - ./db/data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: postgres
+      POSTGRES_USER_FILE: /run/secrets/db_user
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
     secrets:
       - db_password
