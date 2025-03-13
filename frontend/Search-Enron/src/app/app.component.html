@@ -1,0 +1,36 @@
+<div class="top">
+  <h1>Search Enron Mails</h1>
+  <input type="text" (keyup)="search(getValue($event))" placeholder="Search for a term"/>
+  <div *ngIf="searchResult!.searchQuery.length" class="search-section">
+    Search result:
+    <section *ngFor="let result of searchResult?.files">
+      <ul>
+        <li>Name: {{result.fileName}}</li>
+        <li>Occurrences of search: {{result.countOfOccurrences}}</li>
+        <button (click)="onDownload(result)">Download</button>
+      </ul>
+    </section>
+  </div>
+  <br>
+  <input type="file" class="file-input" multiple (change)="onChange($event)"/>
+
+  <div *ngIf="files.length" class="file-section">
+    Selected files:
+    <section *ngFor="let file of files" class="selected-files">
+      <ul>
+        <li>Name: {{ file.name }}</li>
+      </ul>
+    </section>
+
+  </div>
+  <div *ngIf="files.length">
+    <button (click)="onUpload()" class="upload-button">Upload files</button>
+    <button (click)="onClear()">Clear selection</button>
+    <section [ngSwitch]="status">
+      <p *ngSwitchCase="'uploading'">Uploading</p>
+      <p *ngSwitchCase="'success'">Done!</p>
+      <p *ngSwitchCase="'fail'">Error!</p>
+      <p *ngSwitchDefault>Waiting to upload...</p>
+    </section>
+  </div>
+</div>

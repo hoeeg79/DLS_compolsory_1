@@ -1,0 +1,6 @@
+.file-section{
+  max-height: 500px;
+  max-width: 500px;
+  overflow-y: scroll;
+  background-color: whitesmoke;
+}

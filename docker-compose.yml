@@ -42,6 +42,7 @@ services:
       POSTGRES_USER_FILE: /run/secrets/db_user
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
     secrets:
+      - db_user
       - db_password
       
   structurizr:
@@ -50,7 +51,7 @@ services:
       - "8080:8080"
     volumes:
       - ./docs:/usr/local/structurizr
-      - 
+
   seq:
     image: datalust/seq:latest
     ports:
@@ -65,9 +66,22 @@ services:
     image: openzipkin/zipkin
     ports:
       - 9411:9411
-        
+
+  frontend:
+    build:
+      context: ./frontend/Search-Enron
+      dockerfile: Dockerfile
+    ports:
+      - "5111:80"
+    networks:
+      - frontend-network
+
 volumes:
   seq_data1:
+
+networks:
+  frontend-network:
+    driver: bridge
     
 secrets:
   db_user:
