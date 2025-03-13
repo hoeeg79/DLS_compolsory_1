@@ -20,11 +20,13 @@ public class CleanerRepository : ICleanerRepository
         _circuitBreakerPolicy = Policy.Handle<Exception>()
             .CircuitBreakerAsync(3, TimeSpan.FromSeconds(30),
                 (ex, ts) =>
-                {
+                {       
+                    MonitoringService.Log.Warning("Circuit broken: sleep {0} seconds", ts.TotalSeconds);
                     Console.WriteLine($"Circuit broken: sleep {ts.TotalSeconds} seconds");
                 },
                 () =>
                 {
+                    MonitoringService.Log.Warning("Circuit reset");
                     Console.WriteLine("Circuit reset");
                 });
     }
