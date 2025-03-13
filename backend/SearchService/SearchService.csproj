@@ -10,7 +10,21 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2"/>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="OpenTelemetry" Version="1.11.2" />
+        <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.11.2" />
+        <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.11.2" />
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.11.2" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.11.1" />
+        <PackageReference Include="Serilog" Version="4.2.1-dev-02340" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.1-dev-00953" />
+        <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Monitoring\obj\Monitoring.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="Monitoring\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="Monitoring\obj\project.packagespec.json" />
     </ItemGroup>
 
 </Project>

@@ -50,7 +50,25 @@ services:
       - "8080:8080"
     volumes:
       - ./docs:/usr/local/structurizr
+      - 
+  seq:
+    image: datalust/seq:latest
+    ports:
+      - 5341:5341
+      - 5342:80
+    volumes:
+      - seq_data1:/data
+    environment:
+      - ACCEPT_EULA=Y
+    
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
         
+volumes:
+  seq_data1:
+    
 secrets:
   db_user:
     file: db_user.txt

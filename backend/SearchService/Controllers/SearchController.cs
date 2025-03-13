@@ -1,21 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using SearchService.DTO;
 using SearchService.Entities;
+using SearchService.Monitoring;
 using SearchService.Repository;
 
 namespace SearchService.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class SearchController : ControllerBase
+public class SearchController(ISearchRepository searchRepository) : ControllerBase
 {
-    private readonly ISearchRepository _searchRepository;
-    
-    public SearchController(ISearchRepository searchRepository)
-    {
-        _searchRepository = searchRepository;
-    }
-    
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchResultDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -23,10 +17,15 @@ public class SearchController : ControllerBase
     {
         try
         {
-            return Ok( await _searchRepository.GetSearch(searchQuery));
+            MonitoringService.Log.Information("Starting new search. Search query: {searchQuery}", 
+                searchQuery);
+            using var activity = MonitoringService.ActivitySource.StartActivity();
+            return Ok( await searchRepository.GetSearch(searchQuery));
         }
         catch (Exception e)
         {
+            MonitoringService.Log.Error(e, "Error during search. Search query: {searchQuery}", 
+                searchQuery);
             Console.WriteLine(e);
             return NotFound(e.Message);
         }
