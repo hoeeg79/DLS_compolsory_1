@@ -44,3 +44,16 @@ services:
       - "8080:8080"
     volumes:
       - ./docs:/usr/local/structurizr
+
+  frontend:
+    build:
+      context: ./frontend/Search-Enron
+      dockerfile: Dockerfile
+    ports:
+      - "5111:80"
+    networks:
+      - frontend-network
+
+networks:
+  frontend-network:
+    driver: bridge
