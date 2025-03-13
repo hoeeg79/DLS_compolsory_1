@@ -517,3 +517,8 @@ fabric.properties
 
 .idea/
 /backend/DatabaseService/.idea/
+/db
+db_password.txt
+db_user.txt
+/docs/.structurizr
+/docs/.structurizr 2

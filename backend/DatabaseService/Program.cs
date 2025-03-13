@@ -15,8 +15,22 @@ if (!builder.Environment.IsDevelopment())
 {
     hostname = "db-postgres";
 }
-string username = Environment.GetEnvironmentVariable("POSTGRES_USER");
-string password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+string username = Environment.GetEnvironmentVariable("POSTGRES_USER") ?? "";
+string password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD") ?? "";
+
+// Read the PostgreSQL username and password from Docker secret files
+var postgresUserFile = "/run/secrets/db_user";
+var postgresPasswordFile = "/run/secrets/db_password";
+
+if (File.Exists(postgresUserFile))
+{
+    username = File.ReadAllText(postgresUserFile).Trim();
+}
+
+if (File.Exists(postgresPasswordFile))
+{
+    password = File.ReadAllText(postgresPasswordFile).Trim();
+}
 
 // Adding Database Context
 builder.Services.AddDbContext<DatabaseContext>(option =>
