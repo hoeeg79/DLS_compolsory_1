@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'Search-Enron';
   private packages$!: Observable<any>;
   private searchTerm$ = new Subject<string>();
-  searchResult: SearchedFiles | null = null;
+  searchResult: SearchedFiles = {files: [], searchQuery: ""};
   status: "initial" | "uploading" | "success" | "fail" = "initial";
   files: File[] = [];
 

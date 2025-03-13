@@ -59,6 +59,20 @@ services:
     image: openzipkin/zipkin
     ports:
       - 9411:9411
-        
+
+  frontend:
+    build:
+      context: ./frontend/Search-Enron
+      dockerfile: Dockerfile
+    ports:
+      - "5111:80"
+    networks:
+      - frontend-network
+
 volumes:
   seq_data1:
+
+
+networks:
+  frontend-network:
+    driver: bridge
