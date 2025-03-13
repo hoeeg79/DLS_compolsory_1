@@ -1,5 +1,6 @@
 using DatabaseService.DTO;
 using DatabaseService.Entities;
+using DatabaseService.Monitoring;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseService.Repository;
@@ -8,10 +9,13 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 {
     public async Task<SearchResultDto?> GetSearch(string query)
     {
+        MonitoringService.Log.Information("Entered GetSearch");
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.GetSearch");
         // Find word
         Words? word = await context.Words.Where(word => word.Word.Contains(query.ToLower())).FirstOrDefaultAsync();
         if (word == null)
         {
+            MonitoringService.Log.Warning("Search resulted in no matches");
             return null;
         }
         
@@ -41,6 +45,8 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 
     public async Task<Emails> InsertFile(Emails email)
     {
+        MonitoringService.Log.Information("Entered InsertFile");
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.InsertFile");
         context.Emails.Add(email);
         await context.SaveChangesAsync();
         return email;
@@ -48,6 +54,8 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 
     public async Task<List<Words>> InsertWords(List<Words> words)
     {
+        MonitoringService.Log.Information("Entered InsertWords");
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.InsertWords");
         context.Words.AddRange(words);
         await context.SaveChangesAsync();
         return words;
@@ -55,6 +63,8 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 
     public async Task<Dictionary<string, int>> GetExistingWords(List<string> wordList)
     {
+        MonitoringService.Log.Information("Entered GetExistingWords");
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.GetExistingWords");
         // Ensure proper query execution by checking against lowercase words
         return await context.Words
             .Where(existingWord => wordList.Contains(existingWord.Word))
@@ -63,6 +73,8 @@ public class DatabaseRepository(DatabaseContext context) : IDatabaseRepository
 
     public async Task InsertOccurrences(List<Occurrences> occurrences)
     {
+        MonitoringService.Log.Information("Entered InsertOccurrences");
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseRepository.InsertOccurrences");
         context.Occurrences.AddRange(occurrences);
         await context.SaveChangesAsync();
     }

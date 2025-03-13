@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanerService", "CleanerService\CleanerService.csproj", "{3A2BB9D6-004A-4562-B299-B12C788FB608}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring", "Monitoring\Monitoring.csproj", "{09E3A64F-C953-4AC4-A9F2-BA6A5FDCC2A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{3A2BB9D6-004A-4562-B299-B12C788FB608}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A2BB9D6-004A-4562-B299-B12C788FB608}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A2BB9D6-004A-4562-B299-B12C788FB608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09E3A64F-C953-4AC4-A9F2-BA6A5FDCC2A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09E3A64F-C953-4AC4-A9F2-BA6A5FDCC2A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09E3A64F-C953-4AC4-A9F2-BA6A5FDCC2A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09E3A64F-C953-4AC4-A9F2-BA6A5FDCC2A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

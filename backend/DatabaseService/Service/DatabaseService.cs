@@ -1,5 +1,6 @@
 using DatabaseService.DTO;
 using DatabaseService.Entities;
+using DatabaseService.Monitoring;
 using DatabaseService.Repository;
 
 namespace DatabaseService.Service;
@@ -8,13 +9,17 @@ public class DatabaseService(IDatabaseRepository repository) : IDatabaseService
 {
     public async Task<SearchResultDto?> GetSearch(string query)
     {
+        MonitoringService.Log.Information("Entered GetSearch");
         return await repository.GetSearch(query);
     }
 
     public async Task InsertFiles(ListScrubbedFilesDto fileName)
     {
+        MonitoringService.Log.Information("Entered InsertFiles");
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseService.InsertFiles");
         foreach (ScrubbedFilesDto scrubbedFile in fileName.Files)
         {
+            MonitoringService.Log.Information("Processing file: {0}", scrubbedFile.EmailName);
             // Save file
             Emails createdEmail = await SaveEmail(scrubbedFile.EmailName, scrubbedFile.Content);
             
@@ -43,6 +48,8 @@ public class DatabaseService(IDatabaseRepository repository) : IDatabaseService
 
     private async Task<Dictionary<string, int>> SaveWords(List<string> words)
     {
+        MonitoringService.Log.Information("Entered SaveWords");
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseService.SaveWords");
         // Normalize words and remove duplicates
         var uniqueWordsList = words
             .Select(word => word.ToLower())
@@ -60,6 +67,7 @@ public class DatabaseService(IDatabaseRepository repository) : IDatabaseService
 
         if (newWordsList.Count > 0)
         {
+            MonitoringService.Log.Information("New words found: {0}", newWordsList.Count);
             // Insert new words and update dictionary
             var insertedWords = await repository.InsertWords(newWordsList);
             foreach (var newWord in insertedWords)
@@ -73,6 +81,8 @@ public class DatabaseService(IDatabaseRepository repository) : IDatabaseService
 
     private async Task<Emails> SaveEmail(string fileName, byte[] content)
     {
+        MonitoringService.Log.Information("Entered SaveEmail");
+        using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseService.SaveEmail");
         Emails email = new()
         {
             FileName = fileName,
