@@ -27,6 +27,7 @@ public class CleanerController : ControllerBase
 
             if (files == null || files.Length == 0)
             {
+                MonitoringService.Log.Warning("No files uploaded.");
                 return BadRequest("No files uploaded.");
             }
 
@@ -39,6 +40,7 @@ public class CleanerController : ControllerBase
             }
             catch (Exception e)
             {
+                MonitoringService.Log.Error("Error while cleaning files: {message}", e.Message);
                 return StatusCode(500, $"Internal Server Error: {e.Message}");
             }
         }

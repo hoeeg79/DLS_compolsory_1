@@ -6,7 +6,7 @@ using OpenTelemetry.Trace;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
-namespace DatabaseService.Monitoring;
+namespace SearchService.Monitoring;
 
 public static class MonitoringService
 {

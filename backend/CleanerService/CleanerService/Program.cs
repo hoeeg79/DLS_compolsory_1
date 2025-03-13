@@ -30,7 +30,8 @@ builder.Services.AddOpenTelemetry()
     .ConfigureResource(resource => resource.AddService(serviceName))
     .WithTracing(tracing => tracing
         .AddAspNetCoreInstrumentation()
-        .AddConsoleExporter())
+        .AddConsoleExporter()
+        .AddZipkinExporter(config => config.Endpoint = new Uri("http://zipkin:9411/api/v2/spans")))
     .WithMetrics(metrics => metrics
         .AddAspNetCoreInstrumentation()
         .AddConsoleExporter());

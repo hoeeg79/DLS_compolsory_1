@@ -2,7 +2,6 @@ using System.Reflection;
 using DatabaseService.Repository;
 using DatabaseService.Service;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;

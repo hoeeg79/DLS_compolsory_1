@@ -1,6 +1,6 @@
 using DatabaseService.DTO;
+using DatabaseService.Monitoring;
 using DatabaseService.Service;
-using DefaultNamespace;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatabaseService.Controllers;
@@ -17,10 +17,12 @@ public class DatabaseController(IDatabaseService service) : ControllerBase
         using var activity = MonitoringService.ActivitySource.StartActivity("DatabaseController.Get");
         try
         {
+            MonitoringService.Log.Information("Get request received");
             return Ok(await service.GetSearch(query));
         }
         catch (Exception e)
         {
+            MonitoringService.Log.Error("Error in Get request: {0}", e.Message);
             Console.WriteLine(e);
             return NotFound(e.Message);
         }
@@ -33,11 +35,13 @@ public class DatabaseController(IDatabaseService service) : ControllerBase
     {
         try
         {
+            MonitoringService.Log.Information("Insert request received");
             await service.InsertFiles(files);
             return Ok();
         }
         catch (Exception e)
         {
+            MonitoringService.Log.Error("Error in Insert request: {0}", e.Message);
             Console.WriteLine(e);
             return BadRequest(e.Message);
         }
